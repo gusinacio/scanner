@@ -1,17 +1,13 @@
-grammar CCC20201;
+grammar CCC20202;
 
-program         : statement
-                | funclist
-                | ;
+program         : (statement | funclist)?;
 
 funclist        : funcdef funclist
                 | funcdef;
 
 funcdef         : DEF IDENT OPENPAR paramlist CLOSEPAR OPENBRACE statelist CLOSEBRACE;
 
-paramlist       : vartype IDENT COMMA paramlist
-                | vartype IDENT
-                | ;
+paramlist       : (vartype IDENT (COMMA paramlist)?)?;
 
 statement       : vardecl SEMICOLON
                 | atribstat SEMICOLON
@@ -25,26 +21,17 @@ statement       : vardecl SEMICOLON
                 | SEMICOLON;
 
 
-vardecl         : vartype IDENT array;
+vardecl         : vartype IDENT (OPENBRACKET INT_CONSTANT CLOSEBRACKET)*;
 
 vartype         : INT
                 | FLOAT
                 | STRING;
 
-array           : OPENBRACKET INT_CONSTANT CLOSEBRACKET array
-                | ;
-
-atribstat       : lvalue EQUAL atribexpression;
-
-atribexpression : expression
-                | allocexpression
-                | funccall;
+atribstat       : lvalue EQUAL (expression | allocexpression | funccall);
 
 funccall        : IDENT OPENPAR paramlistcall CLOSEPAR;
 
-paramlistcall   : IDENT COMMA paramlistcall
-                | IDENT
-                | ;
+paramlistcall   : (IDENT (COMMA paramlistcall)?)?;
 
 printstat       : PRINT expression;
 
@@ -52,23 +39,15 @@ readstat        : READ lvalue;
 
 returnstat      : RETURN;
 
-ifstat          : IF OPENPAR expression CLOSEPAR statement elsestat;
-
-elsestat        : ELSE statement
-                | ;
+ifstat          : IF OPENPAR expression CLOSEPAR statement (ELSE statement)?;
 
 forstat         : FOR OPENPAR atribstat SEMICOLON expression SEMICOLON atribstat CLOSEPAR statement;
 
-statelist       : statement statelist
-                | statement;
+statelist       : statement statelist?;
 
-allocexpression : NEW vartype allocnumexp;
+allocexpression : NEW vartype (OPENBRACKET numexpression CLOSEBRACKET)+;
 
-allocnumexp     : OPENBRACKET numexpression CLOSEBRACKET allocnumexp
-                | OPENBRACKET numexpression CLOSEBRACKET;
-
-expression      : numexpression comparator numexpression
-                | numexpression;
+expression      : numexpression (comparator numexpression)?;
 
 comparator      : LESS
                 | GREATER
@@ -77,15 +56,9 @@ comparator      : LESS
                 | EQUALCOMP
                 | DIFFERENT;
 
-numexpression   : term numexpression2;
+numexpression   : term (minorarith term)*;
 
-numexpression2  : minorarith term numexpression2
-                | ;
-
-term            : unaryexpr term2;
-
-term2           : priorarith unaryexpr term2
-                | ;
+term            : unaryexpr (priorarith unaryexpr)*;
 
 minorarith      : PLUS
                 | MINUS;
@@ -94,8 +67,7 @@ priorarith      : MULTIPLY
                 | DIVIDE
                 | MODULE;
 
-unaryexpr       : minorarith factor
-                | factor;
+unaryexpr       : minorarith? factor;
 
 factor          : INT_CONSTANT
                 | FLOAT_CONSTANT
@@ -104,8 +76,7 @@ factor          : INT_CONSTANT
                 | lvalue
                 | OPENPAR numexpression CLOSEPAR;
 
-lvalue          : IDENT allocnumexp
-                | IDENT;
+lvalue          : IDENT (OPENBRACKET numexpression CLOSEBRACKET)*;
 
 LESS            : '<';
 GREATER         : '>';
