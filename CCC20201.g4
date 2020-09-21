@@ -1,4 +1,4 @@
-grammar CCC20202;
+grammar CCC20201;
 
 program         : (statement | funclist)?;
 
