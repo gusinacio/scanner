@@ -5,10 +5,17 @@ package br.ufsc.grad.compilator;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTree;
+
+import br.ufsc.grad.compilator.error.SyntaxError;
+import br.ufsc.grad.compilator.error.SyntaxErrorListener;
 
 @SuppressWarnings("deprecation")
 public class App {
@@ -29,8 +36,36 @@ public class App {
                 CCC20201Lexer lexer = new CCC20201Lexer(antlrIs);
                 CommonTokenStream tokens = new CommonTokenStream(lexer);
                 CCC20201Parser parser = new CCC20201Parser(tokens);
-                System.out.println(parser.program());
-                // System.out.println(tree.getText());
+                SyntaxErrorListener errorListener = new SyntaxErrorListener();
+                parser.removeErrorListeners();
+                parser.addErrorListener(errorListener);
+                ParseTree tree = parser.program();
+                if (errorListener.getSyntaxErrors().size() > 0) {
+                    for (SyntaxError error : errorListener.getSyntaxErrors()) {
+                        System.out.printf("line:%d:%d %s\n", error.getLine(), error.getCharPositionInLine(),
+                                error.getMessage());
+                    }
+                    throw new Exception("Error in syntax");
+                }
+                System.out.println("Lista de Tokens:");
+                System.out.println(tokens.getText());
+                // CCC20201Listener listener = new CCC20201BaseListener();
+                // ParseTreeWalker walker = new ParseTreeWalker();
+                // walker.walk(listener, tree);
+            }
+            try (FileInputStream is = new FileInputStream(f)) {
+                ANTLRInputStream antlrIs = new ANTLRInputStream(is);
+                CCC20201Lexer lexer = new CCC20201Lexer(antlrIs);
+                List<Token> tokenList = (List<Token>) lexer.getAllTokens();
+
+                System.out.println("Tabela de símbolos:");
+                System.out.format("%10s%10s%10s %16s%70s\n", "ID", "Linha", "Coluna", "Tipo", "Texto");
+                for (int i = 0; i < tokenList.size(); i++) {
+                    Token token = tokenList.get(i);
+                    System.out.format("%10d%10d%10d %16s%70s", i, token.getLine(), token.getCharPositionInLine(),
+                            lexer.getRuleNames()[token.getType() - 1], token.getText());
+                    System.out.println();
+                }
             }
         } catch (Exception e) {
 
