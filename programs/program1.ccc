@@ -1,0 +1,103 @@
+{
+{
+ int numbers;
+ int i;
+ numbers = new int [100];
+
+ for (i = 0; i < 100; i = i + 1){
+    numbers[i] = i+1;
+ }
+ print "Todos os números foram inseridos no vetor!";
+ for (i = 0; i < 100; i = i + 1){
+    if (numbers[i] % 2 == 0) {
+        print "Este número é par: ";
+        print numbers[i];
+        return;
+    }
+    else {
+        print "Este número é ímpar: ";
+        print numbers[i];
+        return;
+    }
+ }
+}
+
+{
+ int a;
+ int b;
+ int c;
+ int delta;
+ read a;
+ read b;
+ read c;
+ 
+ delta = (b*b)-(4*a*c);
+ if (delta < 0) {
+    print "Não há raízes reais!";
+ }
+ else {
+    if (delta == 0) {
+        float x;
+        x = - b/(2*a);
+        print "O valor da raíz é: ";
+        print x;
+    }
+    else {
+        print "Este programa não calcula quando há duas raízes";
+    }
+ 
+ }
+return;
+}
+
+{
+ int i;
+ int j;
+ string first;
+ string second;
+ first = new string [5];
+ second = new string [5];
+ first[0] = "a";
+ first[1] = "b";
+ first[2] = "c";
+ first[3] = "d";
+ first[4] = "e";
+ second[0] = "e";
+ second[1] = "d";
+ second[2] = "c";
+ second[3] = "f";
+ second[4] = "r";
+ j = 5;
+
+ for (i = 0; i < 5; i = i + 1){
+    j = j - 1;
+    if (first[i] != second[j]){
+        print "Essas palavras não são palíndromos";
+        break;
+    }
+ }
+ print "Essas palavras são palíndromos";
+ return;
+}
+
+{
+ int lista;
+ lista = new int [125];
+ int k;
+ int l;
+ l = 125;
+ 
+ for (k = 0; k < 125; k = k + 1) {
+    if (k % 2 == 1) {
+        lista[k] = 1;
+    }
+ }
+
+ for (k = 0; k < 125; k = k + 1) {
+    if (lista[k] != 1) {
+        lista[k] = l;
+        l = l - 2;
+    }
+ }
+}
+}
