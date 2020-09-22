@@ -5,8 +5,6 @@ package br.ufsc.grad.compilator;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -16,6 +14,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 
 import br.ufsc.grad.compilator.error.SyntaxError;
 import br.ufsc.grad.compilator.error.SyntaxErrorListener;
+import dnl.utils.text.table.TextTable;
 
 @SuppressWarnings("deprecation")
 public class App {
@@ -59,13 +58,15 @@ public class App {
                 List<Token> tokenList = (List<Token>) lexer.getAllTokens();
 
                 System.out.println("Tabela de símbolos:");
-                System.out.format("%10s%10s%10s %16s%70s\n", "ID", "Linha", "Coluna", "Tipo", "Texto");
+
+                String[][] table = new String[tokenList.size()][5];
                 for (int i = 0; i < tokenList.size(); i++) {
                     Token token = tokenList.get(i);
-                    System.out.format("%10d%10d%10d %16s%70s", i, token.getLine(), token.getCharPositionInLine(),
-                            lexer.getRuleNames()[token.getType() - 1], token.getText());
-                    System.out.println();
+                    table[i] = new String[]{i + "", token.getLine() + "", token.getCharPositionInLine() + "",
+                    lexer.getRuleNames()[token.getType() - 1], token.getText()};
                 }
+                TextTable tt = new TextTable(new String[]{"ID", "Linha", "Coluna", "Tipo", "Texto"}, table);
+                tt.printTable();
             }
         } catch (Exception e) {
 

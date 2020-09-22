@@ -21,6 +21,7 @@ repositories {
     // Use jcenter for resolving dependencies.
     // You can declare any Maven/Ivy/file repository here.
     jcenter()
+    mavenCentral()
 }
 
 dependencies {
@@ -28,6 +29,9 @@ dependencies {
     implementation 'com.google.guava:guava:29.0-jre'
 
     antlr "org.antlr:antlr4:4.8" // use ANTLR version 4.8
+
+    compile group: 'com.massisframework', name: 'j-text-utils', version: '0.3.4'
+
     // Use JUnit test framework
     testImplementation 'junit:junit:4.13'
 }
