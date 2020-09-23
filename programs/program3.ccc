@@ -1,0 +1,122 @@
+def main() {
+ print "[1] Calcular fatorial";
+ print "[2] Simular operações em pilha";
+ print "[3] Soma dos divisores";
+
+ int option;
+ read option;
+
+ if (option < 0) {
+    print "Operação não suportada, encerrando programa";
+    return;
+ }
+ 
+ if (option > 3) {
+    print "Operação não suportada, encerrando programa";
+    return;
+ }
+
+ if (option == 1) {
+    int fat;
+    read fat;
+    int i;
+    int res;
+    res = fat;
+
+    if (fat < 0) {
+        print "Não é possível calcular fatorial de número negativo!";
+        return;
+    }
+    if (fat <= 1) {
+        print "O fatorial é 1";
+        return;
+    }
+    for (i = fat; i > 1; i = i - 1) {
+        res = res * (i - 1);
+    }
+    print "O fatorial é: " + res;
+    print "Encerrando programa...";
+    return;
+ }
+
+ if (option == 2) {
+    int topo;
+    int maxSize;
+    int pilha;
+    topo = -1;
+    pilha = new int[maxSize];
+    int action;
+    int pop;
+
+    for (i = 0; i < (maxSize*2); i = i + 1) {
+        read action;
+        if (action == 1) {
+            if (topo < (maxSize - 1)) {
+                pilha[topo+1] = i;
+                print "Empilhado!";
+            }
+            else {
+                print "Pilha já está cheia";
+            }
+        }
+        if (action == 2) {
+            if (topo == -1) {
+                print "Pilha já está vazia";
+            }
+            else {
+                pop = pilha[topo];
+                topo = topo - 1;
+                print "Desempilhado!";
+            }
+        }
+        if (action == 3) {
+            topo = -1;
+            print "Pilha Limpa!";
+        }
+        if (action == 4) {
+            print "Encerrando programa...";
+            break;
+        }
+    }
+    return;
+ }
+
+ else {
+     int num;
+     read num;
+     int max;
+     int list;
+     int qtd;
+     int soma;
+     int i;
+     soma = 0; 
+ 
+     if (num % 2 == 0) {
+        max = num / 2;
+     }
+     else {
+        max = (num - 1) / 2;
+     }
+
+     list = new int [max];
+     list[0] = 1;
+     qtd = 1;
+
+     for (i = 2; i <= max; i = i + 1) {
+        if (num % i == 0) {
+            list[qtd] = i;
+            qtd = qtd + 1;
+        }
+     }
+     
+     for (i = 0; i < max; i = i + 1) {
+        if (list[i] == null) {
+            break;
+        }
+        soma = soma + list[i];
+     }
+
+     print "A soma dos divisores deste número é: " + soma;
+     return;
+ }
+}
