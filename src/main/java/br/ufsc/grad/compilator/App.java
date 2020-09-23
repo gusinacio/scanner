@@ -6,11 +6,11 @@ package br.ufsc.grad.compilator;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.Token;
-import org.antlr.v4.runtime.tree.ParseTree;
 
 import br.ufsc.grad.compilator.error.SyntaxError;
 import br.ufsc.grad.compilator.error.SyntaxErrorListener;
@@ -36,9 +36,10 @@ public class App {
                 CommonTokenStream tokens = new CommonTokenStream(lexer);
                 CCC20201Parser parser = new CCC20201Parser(tokens);
                 SyntaxErrorListener errorListener = new SyntaxErrorListener();
-                parser.removeErrorListeners();
-                parser.addErrorListener(errorListener);
-                ParseTree tree = parser.program();
+                lexer.removeErrorListeners();
+                lexer.addErrorListener(errorListener);
+                /** ParseTree tree = */
+                parser.program();
                 if (errorListener.getSyntaxErrors().size() > 0) {
                     for (SyntaxError error : errorListener.getSyntaxErrors()) {
                         System.out.printf("line:%d:%d %s\n", error.getLine(), error.getCharPositionInLine(),
@@ -47,27 +48,35 @@ public class App {
                     throw new Exception("Error in syntax");
                 }
                 System.out.println("Lista de Tokens:");
-                System.out.println(tokens.getText());
+                Stream<Token> tokenList = tokens.getTokens().stream()
+                        .filter((token) -> token.getType() >= 0 && token.getType() < lexer.getRuleNames().length);
+                tokenList.map((token) -> lexer.getRuleNames()[token.getType() - 1]).forEach((token) -> System.out.println(token));
+                
+                Stream<Token> idTokens = tokens.getTokens().stream().filter((token) -> token.getType() == CCC20201Lexer.IDENT);
+                idTokens.forEach((token) -> System.out.println(token.getText()));
+                // System.out.println(token) -> System.out.println();enList);
                 // CCC20201Listener listener = new CCC20201BaseListener();
                 // ParseTreeWalker walker = new ParseTreeWalker();
                 // walker.walk(listener, tree);
             }
-            try (FileInputStream is = new FileInputStream(f)) {
-                ANTLRInputStream antlrIs = new ANTLRInputStream(is);
-                CCC20201Lexer lexer = new CCC20201Lexer(antlrIs);
-                List<Token> tokenList = (List<Token>) lexer.getAllTokens();
+            // try (FileInputStream is = new FileInputStream(f)) {
+            // ANTLRInputStream antlrIs = new ANTLRInputStream(is);
+            // CCC20201Lexer lexer = new CCC20201Lexer(antlrIs);
+            // List<? extends Token> tokenList = lexer.getAllTokens();
 
-                System.out.println("Tabela de símbolos:");
+            // System.out.println("Tabela de símbolos:");
 
-                String[][] table = new String[tokenList.size()][5];
-                for (int i = 0; i < tokenList.size(); i++) {
-                    Token token = tokenList.get(i);
-                    table[i] = new String[]{i + "", token.getLine() + "", token.getCharPositionInLine() + "",
-                    lexer.getRuleNames()[token.getType() - 1], token.getText()};
-                }
-                TextTable tt = new TextTable(new String[]{"ID", "Linha", "Coluna", "Tipo", "Texto"}, table);
-                tt.printTable();
-            }
+            // String[][] table = new String[tokenList.size()][5];
+            // for (int i = 0; i < tokenList.size(); i++) {
+            // Token token = tokenList.get(i);
+            // table[i] = new String[]{i + "", token.getLine() + "",
+            // token.getCharPositionInLine() + "",
+            // lexer.getRuleNames()[token.getType() - 1], token.getText()};
+            // }
+            // TextTable tt = new TextTable(new String[]{"ID", "Linha", "Coluna", "Tipo",
+            // "Texto"}, table);
+            // tt.printTable();
+            // }
         } catch (Exception e) {
 
             e.printStackTrace();
