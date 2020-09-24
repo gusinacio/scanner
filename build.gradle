@@ -30,7 +30,7 @@ dependencies {
 
     antlr "org.antlr:antlr4:4.8" // use ANTLR version 4.8
 
-    compile group: 'com.massisframework', name: 'j-text-utils', version: '0.3.4'
+    implementation group: 'com.massisframework', name: 'j-text-utils', version: '0.3.4'
 
     // Use JUnit test framework
     testImplementation 'junit:junit:4.13'
