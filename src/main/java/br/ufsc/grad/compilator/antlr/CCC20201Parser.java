@@ -1,5 +1,5 @@
 // Generated from CCC20201.g4 by ANTLR 4.8
-package br.ufsc.grad.compilator;
+package br.ufsc.grad.compilator.antlr;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;

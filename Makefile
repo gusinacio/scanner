@@ -12,5 +12,5 @@ build:
 run:
 	./gradlew run --args='$(RUN_ARGS)'
 
-clean :
+clean:
 	./gradlew clean
