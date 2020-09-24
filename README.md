@@ -36,3 +36,4 @@ $ make clean
 - [ ] Syntactic Analysis
 - [ ] Symbol table with scope analysis
 - [ ] Translation to other programing languages
+
