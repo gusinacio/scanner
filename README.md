@@ -33,7 +33,7 @@ $ make clean
 
 - [X] Makefile
 - [X] Lexical Analysis
-- [ ] Syntactic Analysis
+- [X] Syntactic Analysis
 - [ ] Symbol table with scope analysis
 - [ ] Translation to other programing languages
 
