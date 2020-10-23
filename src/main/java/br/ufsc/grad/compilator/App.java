@@ -6,6 +6,7 @@ package br.ufsc.grad.compilator;
 import java.io.File;
 
 import br.ufsc.grad.compilator.model.LexicalAnalysis;
+import br.ufsc.grad.compilator.model.SyntaticAnalysis;
 
 public class App {
 
@@ -25,12 +26,18 @@ public class App {
         }
 
         try {
+            // System.out.println("Lexical Analysis");
             LexicalAnalysis lexer = new LexicalAnalysis(f);
 
             lexer.analyse();
 
-            lexer.printTokenList();
-            lexer.printSymbolTable();
+            // lexer.printTokenList();
+            // lexer.printSymbolTable();
+
+            System.out.println("Syntatic Analysis");
+            System.out.println();
+            SyntaticAnalysis parser = new SyntaticAnalysis(lexer);
+            parser.analyse();
 
         } catch (Exception e) {
             e.printStackTrace();

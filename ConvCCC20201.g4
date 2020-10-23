@@ -25,17 +25,6 @@ statement:
 	| BREAK SEMICOLON
 	| SEMICOLON;
 
-statement1:
-	vardecl SEMICOLON
-	| atribstat SEMICOLON
-	| printstat SEMICOLON
-	| readstat SEMICOLON
-	| returnstat SEMICOLON
-	| forstat
-	| OPENBRACE statelist CLOSEBRACE
-	| BREAK SEMICOLON
-	| SEMICOLON;
-
 vardecl: vartype IDENT bracket;
 
 bracket: OPENBRACKET INT_CONSTANT CLOSEBRACKET bracket |;
@@ -56,9 +45,9 @@ readstat: READ lvalue;
 
 returnstat: RETURN;
 
-ifstat: IF OPENPAR expression CLOSEPAR statement elsestat;
+ifstat: IF OPENPAR expression CLOSEPAR OPENBRACE statelist CLOSEBRACE elsestat;
 
-elsestat: ELSE (ifstat | statement1);
+elsestat: ELSE statement |;
 
 forstat:
 	FOR OPENPAR atribstat SEMICOLON expression SEMICOLON atribstat CLOSEPAR statement;
@@ -90,7 +79,7 @@ numexpression1: minorarith term |;
 
 term: unaryexpr term1;
 
-term1: priorarith unaryexpr |;
+term1: priorarith unaryexpr term1 |;
 
 minorarith: PLUS | MINUS;
 

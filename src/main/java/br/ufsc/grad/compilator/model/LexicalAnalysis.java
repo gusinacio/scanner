@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.Token;
 
-import br.ufsc.grad.compilator.antlr.CCC20201Lexer;
+import br.ufsc.grad.compilator.antlr.ConvCCC20201Lexer;
 import br.ufsc.grad.compilator.error.LexicalErrorException;
 import br.ufsc.grad.compilator.error.SyntaxError;
 import br.ufsc.grad.compilator.error.SyntaxErrorListener;
@@ -44,7 +44,7 @@ public class LexicalAnalysis {
 
             // Create lexer in ANTLR
             ANTLRInputStream antlrIs = new ANTLRInputStream(is);
-            CCC20201Lexer lexer = new CCC20201Lexer(antlrIs);
+            ConvCCC20201Lexer lexer = new ConvCCC20201Lexer(antlrIs);
             this.tokenTypeNames = lexer.getRuleNames();
             // Create our own error listener
             SyntaxErrorListener errorListener = new SyntaxErrorListener();
@@ -65,7 +65,7 @@ public class LexicalAnalysis {
 
             // ID Table
             Stream<? extends Token> idListStream = new ArrayList<>(this.tokenList).stream()
-                    .filter((token) -> token.getType() == CCC20201Lexer.IDENT);
+                    .filter((token) -> token.getType() == ConvCCC20201Lexer.IDENT);
             idListStream.forEach((token) -> symbolTable.addEntry(token));
         }
     }
@@ -83,7 +83,12 @@ public class LexicalAnalysis {
     public void printTokenList() {
         System.out.println("Lista de Tokens:");
         Stream<? extends Token> tokenStream = new ArrayList<>(this.tokenList).stream();
-        System.out.println(tokenStream.map((token) -> this.tokenTypeNames[token.getType() - 1]).collect(Collectors.joining(", ")).toString());
+        System.out.println(tokenStream.map((token) -> this.tokenTypeNames[token.getType() - 1])
+                .collect(Collectors.joining(", ")).toString());
         System.out.println();
+    }
+
+    public File getFile() {
+        return file;
     }
 }

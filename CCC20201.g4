@@ -1,124 +1,125 @@
 grammar CCC20201;
 
-program         : (statement | funclist)?;
+program: (statement | funclist)?;
 
-funclist        : funcdef funclist
-                | funcdef;
+funclist: funcdef funclist | funcdef;
 
-funcdef         : DEF IDENT OPENPAR paramlist CLOSEPAR OPENBRACE statelist CLOSEBRACE;
+funcdef:
+	DEF IDENT OPENPAR paramlist CLOSEPAR OPENBRACE statelist CLOSEBRACE;
 
-paramlist       : (vartype IDENT (COMMA paramlist)?)?;
+paramlist: (vartype IDENT (COMMA paramlist)?)?;
 
-statement       : vardecl SEMICOLON
-                | atribstat SEMICOLON
-                | printstat SEMICOLON
-                | readstat SEMICOLON
-                | returnstat SEMICOLON
-                | ifstat
-                | forstat
-                | OPENBRACE statelist CLOSEBRACE
-                | BREAK SEMICOLON
-                | SEMICOLON;
+statement:
+	vardecl SEMICOLON
+	| atribstat SEMICOLON
+	| printstat SEMICOLON
+	| readstat SEMICOLON
+	| returnstat SEMICOLON
+	| ifstat
+	| forstat
+	| OPENBRACE statelist CLOSEBRACE
+	| BREAK SEMICOLON
+	| SEMICOLON;
 
+vardecl: vartype IDENT (OPENBRACKET INT_CONSTANT CLOSEBRACKET)*;
 
-vardecl         : vartype IDENT (OPENBRACKET INT_CONSTANT CLOSEBRACKET)*;
+vartype: INT | FLOAT | STRING;
 
-vartype         : INT
-                | FLOAT
-                | STRING;
+atribstat:
+	lvalue EQUAL (expression | allocexpression | funccall);
 
-atribstat       : lvalue EQUAL (expression | allocexpression | funccall);
+funccall: IDENT OPENPAR paramlistcall CLOSEPAR;
 
-funccall        : IDENT OPENPAR paramlistcall CLOSEPAR;
+paramlistcall: (IDENT (COMMA paramlistcall)?)?;
 
-paramlistcall   : (IDENT (COMMA paramlistcall)?)?;
+printstat: PRINT expression;
 
-printstat       : PRINT expression;
+readstat: READ lvalue;
 
-readstat        : READ lvalue;
+returnstat: RETURN;
 
-returnstat      : RETURN;
+ifstat:
+	IF OPENPAR expression CLOSEPAR statement (ELSE statement)?;
 
-ifstat          : IF OPENPAR expression CLOSEPAR statement (ELSE statement)?;
+forstat:
+	FOR OPENPAR atribstat SEMICOLON expression SEMICOLON atribstat CLOSEPAR statement;
 
-forstat         : FOR OPENPAR atribstat SEMICOLON expression SEMICOLON atribstat CLOSEPAR statement;
+statelist: statement statelist?;
 
-statelist       : statement statelist?;
+allocexpression:
+	NEW vartype (OPENBRACKET numexpression CLOSEBRACKET)+;
 
-allocexpression : NEW vartype (OPENBRACKET numexpression CLOSEBRACKET)+;
+expression: numexpression (comparator numexpression)?;
 
-expression      : numexpression (comparator numexpression)?;
+comparator:
+	LESS
+	| GREATER
+	| LESSEQUAL
+	| GREATEREQUAL
+	| EQUALCOMP
+	| DIFFERENT;
 
-comparator      : LESS
-                | GREATER
-                | LESSEQUAL
-                | GREATEREQUAL
-                | EQUALCOMP
-                | DIFFERENT;
+numexpression: term (minorarith term)*;
 
-numexpression   : term (minorarith term)*;
+term: unaryexpr (priorarith unaryexpr)*;
 
-term            : unaryexpr (priorarith unaryexpr)*;
+minorarith: PLUS | MINUS;
 
-minorarith      : PLUS
-                | MINUS;
+priorarith: MULTIPLY | DIVIDE | MODULE;
 
-priorarith      : MULTIPLY
-                | DIVIDE
-                | MODULE;
+unaryexpr: minorarith? factor;
 
-unaryexpr       : minorarith? factor;
+factor:
+	INT_CONSTANT
+	| FLOAT_CONSTANT
+	| STRING_CONSTANT
+	| NULL
+	| lvalue
+	| OPENPAR numexpression CLOSEPAR;
 
-factor          : INT_CONSTANT
-                | FLOAT_CONSTANT
-                | STRING_CONSTANT
-                | NULL
-                | lvalue
-                | OPENPAR numexpression CLOSEPAR;
+lvalue: IDENT (OPENBRACKET numexpression CLOSEBRACKET)*;
 
-lvalue          : IDENT (OPENBRACKET numexpression CLOSEBRACKET)*;
+LESS: '<';
+GREATER: '>';
+LESSEQUAL: '<=';
+GREATEREQUAL: '>=';
+EQUALCOMP: '==';
+DIFFERENT: '!=';
+PLUS: '+';
+MINUS: '-';
+MULTIPLY: '*';
+DIVIDE: '/';
+MODULE: '%';
 
-LESS            : '<';
-GREATER         : '>';
-LESSEQUAL       : '<=';
-GREATEREQUAL    : '>=';
-EQUALCOMP       : '==';
-DIFFERENT       : '!=';
-PLUS            : '+';
-MINUS           : '-';
-MULTIPLY        : '*';
-DIVIDE          : '/';
-MODULE          : '%';
+EQUAL: '=';
+SEMICOLON: ';';
+COMMA: ',';
+OPENPAR: '(';
+CLOSEPAR: ')';
+OPENBRACE: '{';
+CLOSEBRACE: '}';
+OPENBRACKET: '[';
+CLOSEBRACKET: ']';
 
-EQUAL           : '=';
-SEMICOLON       : ';';
-COMMA           : ',';
-OPENPAR         : '(';
-CLOSEPAR        : ')';
-OPENBRACE       : '{';
-CLOSEBRACE      : '}';
-OPENBRACKET     : '[';
-CLOSEBRACKET    : ']';
+DEF: 'def';
+NEW: 'new';
+IF: 'if';
+ELSE: 'else';
+FOR: 'for';
+RETURN: 'return';
+BREAK: 'break';
+PRINT: 'print';
+READ: 'read';
 
-DEF             : 'def';
-NEW             : 'new';
-IF              : 'if';
-ELSE            : 'else';
-FOR             : 'for';
-RETURN          : 'return';
-BREAK           : 'break';
-PRINT           : 'print';
-READ            : 'read';
+INT: 'int';
+FLOAT: 'float';
+STRING: 'string';
 
-INT             : 'int';
-FLOAT           : 'float';
-STRING          : 'string';
+NULL: 'null';
+IDENT: [a-zA-Z_][a-zA-Z0-9_]*;
+INT_CONSTANT: [0-9]+;
+STRING_CONSTANT: '"' .*? '"';
+FLOAT_CONSTANT: ('0' ..'9')+ '.' ('0' ..'9')+;
 
-NULL            : 'null';
-IDENT           : [a-zA-Z_][a-zA-Z0-9_]*;
-INT_CONSTANT    : [0-9]+;
-STRING_CONSTANT : '"' .*? '"';
-FLOAT_CONSTANT  : ('0'..'9')+ '.' ('0'..'9')+;
-
-WS : [ \t\r\n]+ -> skip ;
+WS: [ \t\r\n]+ -> skip;
 
