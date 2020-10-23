@@ -25,6 +25,17 @@ statement:
 	| BREAK SEMICOLON
 	| SEMICOLON;
 
+statement1:
+	vardecl SEMICOLON
+	| atribstat SEMICOLON
+	| printstat SEMICOLON
+	| readstat SEMICOLON
+	| returnstat SEMICOLON
+	| forstat
+	| OPENBRACE statelist CLOSEBRACE
+	| BREAK SEMICOLON
+	| SEMICOLON;
+
 vardecl: vartype IDENT bracket;
 
 bracket: OPENBRACKET INT_CONSTANT CLOSEBRACKET bracket |;
@@ -33,9 +44,7 @@ vartype: INT | FLOAT | STRING;
 
 atribstat: lvalue EQUAL atribstat1;
 
-atribstat1: expression | allocexpression | funccall;
-
-funccall: IDENT OPENPAR paramlistcall CLOSEPAR;
+atribstat1: expression | allocexpression;
 
 paramlistcall: IDENT paramlistcall1 |;
 
@@ -49,7 +58,7 @@ returnstat: RETURN;
 
 ifstat: IF OPENPAR expression CLOSEPAR statement elsestat;
 
-elsestat: ELSE statement |;
+elsestat: ELSE (ifstat | statement1);
 
 forstat:
 	FOR OPENPAR atribstat SEMICOLON expression SEMICOLON atribstat CLOSEPAR statement;
@@ -94,7 +103,7 @@ factor:
 	| FLOAT_CONSTANT
 	| STRING_CONSTANT
 	| NULL
-	| lvalue
+	| IDENT (numexpbracket | OPENPAR paramlistcall CLOSEPAR)
 	| OPENPAR numexpression CLOSEPAR;
 
 lvalue: IDENT numexpbracket;
