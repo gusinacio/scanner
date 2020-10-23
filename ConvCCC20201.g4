@@ -2,12 +2,16 @@ grammar ConvCCC20201;
 
 program: statement | funclist |;
 
-funclist: funcdef funclist | funcdef;
+funclist: funcdef funclist1;
+
+funclist1: funclist |;
 
 funcdef:
 	DEF IDENT OPENPAR paramlist CLOSEPAR OPENBRACE statelist CLOSEBRACE;
 
-paramlist: (vartype IDENT (COMMA paramlist |)) |;
+paramlist: vartype IDENT paramlist1 |;
+
+paramlist1: COMMA paramlist |;
 
 statement:
 	vardecl SEMICOLON
@@ -27,12 +31,15 @@ bracket: OPENBRACKET INT_CONSTANT CLOSEBRACKET bracket |;
 
 vartype: INT | FLOAT | STRING;
 
-atribstat:
-	lvalue EQUAL (expression | allocexpression | funccall);
+atribstat: lvalue EQUAL atribstat1;
+
+atribstat1: expression | allocexpression | funccall;
 
 funccall: IDENT OPENPAR paramlistcall CLOSEPAR;
 
-paramlistcall: (IDENT (COMMA paramlistcall |)) |;
+paramlistcall: IDENT paramlistcall1 |;
+
+paramlistcall1: COMMA paramlistcall |;
 
 printstat: PRINT expression;
 
@@ -40,20 +47,25 @@ readstat: READ lvalue;
 
 returnstat: RETURN;
 
-ifstat:
-	IF OPENPAR expression CLOSEPAR statement (ELSE statement |);
+ifstat: IF OPENPAR expression CLOSEPAR statement elsestat;
+
+elsestat: ELSE statement |;
 
 forstat:
 	FOR OPENPAR atribstat SEMICOLON expression SEMICOLON atribstat CLOSEPAR statement;
 
-statelist: statement (statelist |);
+statelist: statement statelist1;
+
+statelist1: statelist |;
 
 allocexpression:
 	NEW vartype OPENBRACKET numexpression CLOSEBRACKET numexpbracket;
 
 numexpbracket: OPENBRACKET numexpression CLOSEBRACKET |;
 
-expression: numexpression (comparator numexpression |);
+expression: numexpression expression1;
+
+expression1: comparator numexpression |;
 
 comparator:
 	LESS
