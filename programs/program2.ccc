@@ -1,134 +1,119 @@
-def soma(float a, float b) {
- float res;
- res = a + b;
- return;
+{
+	{
+		print "Mini programa 1";
+		int n;
+		int s;
+		int i;
+		int v;
+		c = new int[101];
+		n = 8;
+		s = 1;
+		int go;
+		go = 19;
+		int p;
+		p = 4;
+		int j;
+		for(j = p; j <= n; j = j + go) {
+			v[j] = 1;
+		}
+		for(j = p; j >= 0; j = j-go) {
+			v[j] = 1;
+		}
+		for(j = 0; j <= n; j = j+1) {
+			print j[i];
+		}
+	}
+{
+		print "Mini problema 2";
+		int a;
+		int b;
+		int c;
+		int x;
+		int y;
+		x = 30;
+		y = 20;
+		a = ((3*x)*(3*x))+y*y;
+		b = (2*x*x)+((5*y)*(5*y));
+		c = (-1*100*x)+(y*y*y);
+
+		if(a > b) {
+			if(a > c) {
+				print "Jogador 1 ganhou";
+			}
+		}
+		if(b > a) {
+			if(b > c) {
+				print "Jogador 2 ganhou";
+			}
+		}
+		if(c > a) {
+			if(c > b) {
+				print "Jogador 3 ganhou";
+			}
+		}
+	}
+	{
+		print "Mini problema 3";
+		int v;
+		int n;
+		int cont;
+		cont = 0;
+		v = new int[100];
+		n = 6;
+		if(n == 0) {
+			break;
+		}
+		if(n == 2) {
+			if(v[1] != v[2]) {
+				cont = 2;
+			}
+		} else {
+			int j;
+			v[n+1] = v[1];
+			v[0] = v[n];
+			for(j = 0; j < n+1; j = j+1) {
+				if (v[i] > v[i-1]) {
+					if(v[i] > v[i+1]) {
+						cont = cont + 1;
+					}
+				}
+				if (v[i] < v[i-1]) {
+					if(v[i] < v[i+1]) {
+						cont = cont + 1;
+					}
+				}
+			}
+		}
+
+		print cont;
+	}
+    {
+        print "Mini problema 4";
+		int x;
+		int n;
+		int y;
+		int z;
+		int value;
+		n = 10;
+		y = 0;
+		z = 1;
+
+		for(x = 0; x < n; x = x + 1) {
+			value = y + z;
+			y = z;
+			z = value;
+		}
+
+		print "O valor é";
+		print value;
+
+		int sobra;
+		sobra = value % 2;
+
+		if(sobra == 0) {
+			print "O valor obtido nao tem resto";
+		} else {
+			print "O valor tem resto";
+		}
+	}
 }
-
-def sub(float c, float d) {
- float res;
- res = a - b;
- return;
-}
-
-def pow(int e){
- int res;
- res = e*e;
- return;
-}
-
-def mult(float x, float y) {
- float res;
- res = x*y;
- return;
-}
-
-def div(float l, float m) {
- float rest;
- res = l/m;
- return;
-}
- 
-def exp(int f, int g) {
- int res;
- res = f;
- int i;
- for (i = 1; i <= f; i = i + 1) {
-    res = mult(res, i);
- }
- return;
-}
-
-def log(int base, int logaritimando) {
- int res;
- int j;
- res = 0;
- for (j = logaritimando; j == 1; j = j / base) {
-    if (logaritmando % base == 0) {
-        res = res + 1;
-    }
-    else {
-        print "Nosso programa não suporta essa combinação.";
-        break;
-    }
- }
- return; 
-}
-
-def triangulo(int base, int ladoE, int ladoD) {
- string word;
- if (base != ladoE) {
-    if (base != ladoD) {
-        if (ladoE != ladoD) {
-            word = "Triângulo escaleno";
-            return;
-        }
-        else {
-            word = "Triângulo isósceles";
-            return;
-        }
-    }
- }
- else {
-    if (base != ladoD) {
-        word = "Triângulo isósceles";
-        return;
-    }
-    else {
-        word = "Triângulo equilátero";
-        return;
-    }
- }
-}
-
-def main(){
- print "Vamos realizar alguns testes...";
-
- int teste;
- int testeNd;
- int testeRd;
- int resp;
- float testFourth;
- float testFifth;
- float ans;
- teste = 8;
- testeNd = 2;
- testeRd = 10;
- testeFourth = 5.6;
- testeFifth = 3.2;
- string t;
- 
- ans = soma(testeFourth, testeFifth);
- if (ans != 8.8) {
-    print "Houve uma imprecisão de ponto flutuante";
-    return;
- }
-
- ans = sub(testeFourth, testeFifth);
- if (ans != 2.4) {
-    print "Houve uma imprecisão de ponto flutuante";
-    return;
- }
-    
- ans = mult(testeFourth, testeFifth);
- if (ans != 17.2) {
-    print "Houve uma imprecisão de ponto flutuante";
-    return;
- }
-
- ans = div(testeFourth, testeFifth);
- if (ans != 1.75) {
-    print "Houve uma imprecisão de ponto flutuante";
-    return;
- }
-
- resp = pow(teste);
- resp = exp(teste, testeNd);
- resp = log(teste, testeNd);
-
- t = triangulo(teste, testeNd, testeRd);
- print(t);
-
- return;
-}
-
-
