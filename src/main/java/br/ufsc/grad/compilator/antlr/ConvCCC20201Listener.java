@@ -358,6 +358,16 @@ public interface ConvCCC20201Listener extends ParseTreeListener {
 	 */
 	void exitFactor(ConvCCC20201Parser.FactorContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ConvCCC20201Parser#factor1}.
+	 * @param ctx the parse tree
+	 */
+	void enterFactor1(ConvCCC20201Parser.Factor1Context ctx);
+	/**
+	 * Exit a parse tree produced by {@link ConvCCC20201Parser#factor1}.
+	 * @param ctx the parse tree
+	 */
+	void exitFactor1(ConvCCC20201Parser.Factor1Context ctx);
+	/**
 	 * Enter a parse tree produced by {@link ConvCCC20201Parser#lvalue}.
 	 * @param ctx the parse tree
 	 */

@@ -92,8 +92,11 @@ factor:
 	| FLOAT_CONSTANT
 	| STRING_CONSTANT
 	| NULL
-	| IDENT (numexpbracket | OPENPAR paramlistcall CLOSEPAR)
+	| IDENT factor1
 	| OPENPAR numexpression CLOSEPAR;
+
+factor1:
+	numexpbracket | OPENPAR paramlistcall CLOSEPAR;
 
 lvalue: IDENT numexpbracket;
 

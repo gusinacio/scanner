@@ -436,6 +436,18 @@ public class ConvCCC20201BaseListener implements ConvCCC20201Listener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterFactor1(ConvCCC20201Parser.Factor1Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFactor1(ConvCCC20201Parser.Factor1Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterLvalue(ConvCCC20201Parser.LvalueContext ctx) { }
 	/**
 	 * {@inheritDoc}
