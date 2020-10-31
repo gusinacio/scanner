@@ -29,6 +29,10 @@ For cleaning your environment and removing all build files, you can simply run:
 $ make clean
 ```
 
+## Changed program for T2
+
+We've decided to change the program2.ccc in our version for Parser.
+
 ## TODO
 
 - [X] Makefile
