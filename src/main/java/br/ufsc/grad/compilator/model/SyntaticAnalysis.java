@@ -21,6 +21,13 @@ public class SyntaticAnalysis {
         this.lexer = lexer;
     }
 
+    /**
+     * Call the parser inside ANTLR Class for Syntatical Analysis
+     * 
+     * On success: print successful parsing
+     * 
+     * On error: print the line and what error
+     */
     public void analyse() throws SyntaticalErrorException, IOException {
         try (FileInputStream is = new FileInputStream(this.lexer.getFile())) {
             ANTLRInputStream antlrIs = new ANTLRInputStream(is);
