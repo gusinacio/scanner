@@ -1,5 +1,5 @@
-# Scanner - a lexical analyser
-This project is designed to create the first part of a computer compiler. It's a project for INE5426, a Computer Science course at UFSC.
+# Scanner - a lexical analyser and syntactic analysis
+This project is designed to create the first and second parts of a computer compiler. It's a project for INE5426, a Computer Science course at UFSC.
 
 ## Prerequisites
 - Java 8 or greater
@@ -22,7 +22,7 @@ If you want to run the application, you can run the following command with the p
 ```
 $ make run <file>.ccc
 ```
-It will analyse the source code from file and it will output a token list and a symbol table.
+It will analyse the source code from file and it will output if the code passes in the syntactic analysis.
 
 For cleaning your environment and removing all build files, you can simply run:
 ```
