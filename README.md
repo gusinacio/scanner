@@ -1,4 +1,4 @@
-# Scanner - a lexical analyser and syntactic analysis
+# Scanner and Parser - lexical analyser and syntax analyser
 This project is designed to create the first and second parts of a computer compiler. It's a project for INE5426, a Computer Science course at UFSC.
 
 ## Prerequisites
@@ -22,7 +22,7 @@ If you want to run the application, you can run the following command with the p
 ```
 $ make run <file>.ccc
 ```
-It will analyse the source code from file and it will output if the code passes in the syntactic analysis.
+It will analyse the source code from file and it will output if the code passes in the syntax analysis.
 
 For cleaning your environment and removing all build files, you can simply run:
 ```
@@ -37,7 +37,7 @@ We've decided to change the program2.ccc in our version for Parser.
 
 - [X] Makefile
 - [X] Lexical Analysis
-- [X] Syntactic Analysis
+- [X] Syntax Analysis
 - [ ] Symbol table with scope analysis
 - [ ] Translation to other programing languages
 

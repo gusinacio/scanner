@@ -6,7 +6,7 @@ package br.ufsc.grad.compilator;
 import java.io.File;
 
 import br.ufsc.grad.compilator.model.LexicalAnalysis;
-import br.ufsc.grad.compilator.model.SyntaticAnalysis;
+import br.ufsc.grad.compilator.model.SyntaxAnalysis;
 
 public class App {
 
@@ -34,9 +34,9 @@ public class App {
             // lexer.printTokenList();
             // lexer.printSymbolTable();
 
-            System.out.println("Syntatic Analysis");
+            System.out.println("Syntax Analysis");
             System.out.println();
-            SyntaticAnalysis parser = new SyntaticAnalysis(lexer);
+            SyntaxAnalysis parser = new SyntaxAnalysis(lexer);
             parser.analyse();
 
         } catch (Exception e) {

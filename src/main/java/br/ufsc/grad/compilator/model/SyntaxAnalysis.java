@@ -8,16 +8,16 @@ import org.antlr.v4.runtime.ANTLRInputStream;
 
 import br.ufsc.grad.compilator.antlr.ConvCCC20201Lexer;
 import br.ufsc.grad.compilator.antlr.ConvCCC20201Parser;
-import br.ufsc.grad.compilator.error.SyntaticalErrorException;
+import br.ufsc.grad.compilator.error.SyntaxErrorException;
 import br.ufsc.grad.compilator.error.SyntaxError;
 import br.ufsc.grad.compilator.error.SyntaxErrorListener;
 
 @SuppressWarnings("deprecation")
-public class SyntaticAnalysis {
+public class SyntaxAnalysis {
 
     private LexicalAnalysis lexer;
 
-    public SyntaticAnalysis(LexicalAnalysis lexer) {
+    public SyntaxAnalysis(LexicalAnalysis lexer) {
         this.lexer = lexer;
     }
 

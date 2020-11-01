@@ -1,6 +1,6 @@
 package br.ufsc.grad.compilator.error;
 
-public class SyntaticalErrorException extends CompilationException {
+public class SyntaxErrorException extends CompilationException {
 
     /**
      *
@@ -8,7 +8,7 @@ public class SyntaticalErrorException extends CompilationException {
     private static final long serialVersionUID = 1L;
     
 
-    public SyntaticalErrorException(String cause) {
+    public SyntaxErrorException(String cause) {
         super(cause);
     }
 }
