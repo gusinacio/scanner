@@ -64,9 +64,9 @@ public class LexicalAnalysis {
             }
 
             // ID Table
-            Stream<? extends Token> idListStream = new ArrayList<>(this.tokenList).stream()
-                    .filter((token) -> token.getType() == ConvCCC20201Lexer.IDENT);
-            idListStream.forEach((token) -> symbolTable.addEntry(token));
+            // Stream<? extends Token> idListStream = new ArrayList<>(this.tokenList).stream()
+            //         .filter((token) -> token.getType() == ConvCCC20201Lexer.IDENT);
+            // idListStream.forEach((token) -> symbolTable.addEntry(token));
         }
     }
 
@@ -74,7 +74,7 @@ public class LexicalAnalysis {
      * Prints all items in the symbol table
      */
     public void printSymbolTable() {
-        this.symbolTable.print();
+        // this.symbolTable.print();
     }
 
     /**

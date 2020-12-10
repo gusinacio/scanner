@@ -23,7 +23,7 @@
 			print j[i];
 		}
 	}
-{
+	{
 		print "Mini problema 2";
 		int a;
 		int b;

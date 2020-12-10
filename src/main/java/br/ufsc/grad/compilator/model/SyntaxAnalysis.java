@@ -11,6 +11,8 @@ import br.ufsc.grad.compilator.antlr.ConvCCC20201Parser;
 import br.ufsc.grad.compilator.error.SyntaxErrorException;
 import br.ufsc.grad.compilator.error.SyntaxError;
 import br.ufsc.grad.compilator.error.SyntaxErrorListener;
+import br.ufsc.grad.compilator.listeners.ScopeListener;
+import br.ufsc.grad.compilator.listeners.SymbolListener;
 
 @SuppressWarnings("deprecation")
 public class SyntaxAnalysis {
@@ -28,7 +30,7 @@ public class SyntaxAnalysis {
      * 
      * On error: print the line and what error
      */
-    public void analyse() throws SyntaticalErrorException, IOException {
+    public void analyse() throws SyntaxErrorException, IOException {
         try (FileInputStream is = new FileInputStream(this.lexer.getFile())) {
             ANTLRInputStream antlrIs = new ANTLRInputStream(is);
             ConvCCC20201Lexer lexer = new ConvCCC20201Lexer(antlrIs);
@@ -37,15 +39,18 @@ public class SyntaxAnalysis {
             SyntaxErrorListener errorListener = new SyntaxErrorListener();
             parser.removeErrorListeners();
             parser.addErrorListener(errorListener);
+            SymbolTable table = new SymbolTable();
+            parser.addParseListener(new ScopeListener(table));
+            parser.addParseListener(new SymbolListener(table));
             parser.program();
-
+            
             // If error, stop now and print line
             if (errorListener.getSyntaxErrors().size() > 0) {
                 for (SyntaxError error : errorListener.getSyntaxErrors()) {
                     System.out.printf("line %d:%d %s\n", error.getLine(), error.getCharPositionInLine(),
                             error.getMessage());
                 }
-                throw new SyntaticalErrorException("Error parsing");
+                throw new SyntaxErrorException("Error parsing");
             } else {
                 System.out.println("Successful parsing!");
             }
