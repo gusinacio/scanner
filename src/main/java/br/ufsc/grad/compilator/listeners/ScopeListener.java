@@ -33,13 +33,15 @@ public class ScopeListener extends ConvCCC20201BaseListener {
         customValues.get(ctx).putIfAbsent("nextStmt", "END");
 
         try {
+            File folder = new File(Constants.OUTPUT_PATH);
+            if (!folder.exists())
+                folder.mkdirs();
             File outputFile = new File(Constants.SYMBOL_TABLE_OUTPUT_PATH);
             if (outputFile.exists())
                 outputFile.delete();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
 
         table.enterScope(ScopeType.PROGRAM, ctx.start.getLine());
     }
@@ -48,7 +50,6 @@ public class ScopeListener extends ConvCCC20201BaseListener {
     public void exitProgram(ProgramContext ctx) {
         table.exitScope();
     }
-
 
     @Override
     public void enterOpenclosestat(OpenclosestatContext ctx) {
