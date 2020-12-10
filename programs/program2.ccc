@@ -61,7 +61,7 @@
 		v = new int[100];
 		n = 6;
 		if(n == 0) {
-			break;
+			n = -1;
 		}
 		if(n == 2) {
 			if(v[1] != v[2]) {
@@ -75,7 +75,9 @@
 				if (v[i] > v[i-1]) {
 					if(v[i] > v[i+1]) {
 						cont = cont + 1;
-					}
+					} else {
+                            break;
+                    }
 				}
 				if (v[i] < v[i-1]) {
 					if(v[i] < v[i+1]) {
