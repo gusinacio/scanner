@@ -7,12 +7,13 @@ import org.antlr.v4.runtime.ParserRuleContext;
 
 import br.ufsc.grad.compilator.Constants;
 import br.ufsc.grad.compilator.antlr.ConvCCC20201BaseListener;
+import br.ufsc.grad.compilator.antlr.ConvCCC20201Parser.BreakstatContext;
 import br.ufsc.grad.compilator.antlr.ConvCCC20201Parser.ElsestatContext;
 import br.ufsc.grad.compilator.antlr.ConvCCC20201Parser.ForstatContext;
 import br.ufsc.grad.compilator.antlr.ConvCCC20201Parser.FuncdefContext;
 import br.ufsc.grad.compilator.antlr.ConvCCC20201Parser.IfstatContext;
+import br.ufsc.grad.compilator.antlr.ConvCCC20201Parser.OpenclosestatContext;
 import br.ufsc.grad.compilator.antlr.ConvCCC20201Parser.ProgramContext;
-import br.ufsc.grad.compilator.antlr.ConvCCC20201Parser.StatementContext;
 import br.ufsc.grad.compilator.model.SymbolTable;
 import br.ufsc.grad.compilator.model.scope.ScopeType;
 
@@ -48,17 +49,21 @@ public class ScopeListener extends ConvCCC20201BaseListener {
         table.exitScope();
     }
 
+
     @Override
-    public void enterStatement(StatementContext ctx) {
-        if (ctx.start.getText().equals("{")) { // Kinda ugly but it works
-            table.enterScope(ScopeType.STATELIST, ctx.start.getLine());
-        }
+    public void enterOpenclosestat(OpenclosestatContext ctx) {
+        table.enterScope(ScopeType.STATELIST, ctx.start.getLine());
     }
 
     @Override
-    public void exitStatement(StatementContext ctx) {
-        if (ctx.start.getText().equals("{")) { // Kinda ugly but it works
-            table.exitScope();
+    public void exitOpenclosestat(OpenclosestatContext ctx) {
+        table.exitScope();
+    }
+
+    @Override
+    public void exitBreakstat(BreakstatContext ctx) {
+        if (!table.isInside(ScopeType.FOR)) {
+            throw new RuntimeException("Error: Break outside FOR LOOP line: " + ctx.start.getLine());
         }
     }
 

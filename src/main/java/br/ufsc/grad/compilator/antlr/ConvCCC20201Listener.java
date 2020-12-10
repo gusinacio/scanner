@@ -78,6 +78,26 @@ public interface ConvCCC20201Listener extends ParseTreeListener {
 	 */
 	void exitStatement(ConvCCC20201Parser.StatementContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ConvCCC20201Parser#breakstat}.
+	 * @param ctx the parse tree
+	 */
+	void enterBreakstat(ConvCCC20201Parser.BreakstatContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ConvCCC20201Parser#breakstat}.
+	 * @param ctx the parse tree
+	 */
+	void exitBreakstat(ConvCCC20201Parser.BreakstatContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ConvCCC20201Parser#openclosestat}.
+	 * @param ctx the parse tree
+	 */
+	void enterOpenclosestat(ConvCCC20201Parser.OpenclosestatContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ConvCCC20201Parser#openclosestat}.
+	 * @param ctx the parse tree
+	 */
+	void exitOpenclosestat(ConvCCC20201Parser.OpenclosestatContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ConvCCC20201Parser#vardecl}.
 	 * @param ctx the parse tree
 	 */

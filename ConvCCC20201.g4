@@ -21,9 +21,13 @@ statement:
 	| returnstat SEMICOLON
 	| ifstat
 	| forstat
-	| OPENBRACE statelist CLOSEBRACE
-	| BREAK SEMICOLON
+	| openclosestat
+	| breakstat
 	| SEMICOLON;
+
+breakstat: BREAK SEMICOLON;
+
+openclosestat: OPENBRACE statelist CLOSEBRACE;
 
 vardecl: vartype IDENT bracket;
 
