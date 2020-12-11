@@ -34,7 +34,7 @@ public class App {
             // lexer.printTokenList();
             // lexer.printSymbolTable();
 
-            System.out.println("Syntax Analysis");
+            System.out.println("Semantic Analysis");
             System.out.println();
             SyntaxAnalysis parser = new SyntaxAnalysis(lexer);
             parser.analyse();

@@ -16,11 +16,14 @@ import org.antlr.v4.runtime.ParserRuleContext;
 
 import br.ufsc.grad.compilator.Constants;
 import br.ufsc.grad.compilator.antlr.ConvCCC20201BaseListener;
+import br.ufsc.grad.compilator.antlr.ConvCCC20201Parser.Factor1Context;
 import br.ufsc.grad.compilator.antlr.ConvCCC20201Parser.FactorContext;
 import br.ufsc.grad.compilator.antlr.ConvCCC20201Parser.LvalueContext;
 import br.ufsc.grad.compilator.antlr.ConvCCC20201Parser.MinorarithContext;
 import br.ufsc.grad.compilator.antlr.ConvCCC20201Parser.NumexpbracketContext;
+import br.ufsc.grad.compilator.antlr.ConvCCC20201Parser.Numexpression1Context;
 import br.ufsc.grad.compilator.antlr.ConvCCC20201Parser.NumexpressionContext;
+import br.ufsc.grad.compilator.antlr.ConvCCC20201Parser.Term1Context;
 import br.ufsc.grad.compilator.antlr.ConvCCC20201Parser.TermContext;
 import br.ufsc.grad.compilator.antlr.ConvCCC20201Parser.UnaryexprContext;
 import br.ufsc.grad.compilator.listeners.util.TreeUtil;
@@ -72,13 +75,14 @@ public class TreePrinter extends ConvCCC20201BaseListener {
                     PrintWriter out = new PrintWriter(bw)) {
                 nodes.put(ctx, nodes.get(ctx.term()));
 
-                for (ParseTree[] entry : reverse(TreeUtil.chunker(ctx.children, 2))) {
+                Numexpression1Context n1ctx = ctx.numexpression1();
+                if (n1ctx.minorarith() != null){
                     TreeTuple left = nodes.get(ctx);
-                    TreeTuple right = nodes.get(entry[1]);
-                    nodes.put(ctx, new TreeTuple(entry[0].getText(), left, right));
-                    out.println("Syntax tree for expression in line " + ctx.start.getLine());
-                    print_tree(nodes.get(ctx), out);
+                    TreeTuple right = nodes.get(n1ctx.term());
+                    nodes.put(ctx, new TreeTuple(n1ctx.minorarith().getText(), left, right));
                 }
+                out.println("Syntax tree for expression in line " + ctx.start.getLine());
+                print_tree(nodes.get(ctx), out);
             }
 
         } catch (Exception e) {
@@ -90,41 +94,45 @@ public class TreePrinter extends ConvCCC20201BaseListener {
     public void exitTerm(TermContext ctx) {
         nodes.put(ctx, nodes.get(ctx.unaryexpr()));
 
-        for (ParseTree[] entry : reverse(TreeUtil.chunker(ctx.children, 2))) {
+        Term1Context t1ctx = ctx.term1();
+        while (t1ctx.priorarith() != null) {
             TreeTuple left = nodes.get(ctx);
-            TreeTuple right = nodes.get(entry[1]);
-            nodes.put(ctx, new TreeTuple(entry[0].getText(), left, right));
+            TreeTuple right = nodes.get(t1ctx.unaryexpr());
+            nodes.put(ctx, new TreeTuple(t1ctx.priorarith().getText(), left, right));
+            t1ctx = t1ctx.term1();
         }
     }
 
     @Override
     public void exitUnaryexpr(UnaryexprContext ctx) {
         if (ctx.minorarith() != null) {
-            if (ctx.minorarith().MINUS() != null) {
-                nodes.put(ctx, new TreeTuple("-", nodes.get(ctx.factor())));
-            } else if (ctx.minorarith().PLUS() != null) {
-                nodes.put(ctx, new TreeTuple("+", nodes.get(ctx.factor())));
-            } else {
-                nodes.put(ctx, nodes.get(ctx.factor()));
-            }
+            nodes.put(ctx, new TreeTuple(ctx.minorarith().getText(), nodes.get(ctx.factor())));
+        } else {
+            nodes.put(ctx, nodes.get(ctx.factor()));
         }
     }
 
     @Override
     public void exitFactor(FactorContext ctx) {
-        if (ctx.INT_CONSTANT() != null) {
-            nodes.put(ctx, new TreeTuple(ctx.INT_CONSTANT().getText()));
-        } else if (ctx.FLOAT_CONSTANT() != null) {
-            nodes.put(ctx, new TreeTuple(ctx.FLOAT_CONSTANT().getText()));
-        } else if (ctx.STRING_CONSTANT() != null) {
-            nodes.put(ctx, new TreeTuple(ctx.STRING_CONSTANT().getText()));
-        } else if (ctx.NULL() != null) {
-            nodes.put(ctx, new TreeTuple(ctx.NULL().getText()));
-        } else if (ctx.IDENT() != null) {
-            nodes.put(ctx, new TreeTuple(ctx.IDENT().getText()));
-        } else if (ctx.numexpression() != null) {
+        if (ctx.numexpression() != null) {
+            System.out.println(ctx.getText());
             nodes.put(ctx, nodes.get(ctx.numexpression()));
+        } else if (ctx.factor1() != null) {
+            nodes.put(ctx, nodes.get(ctx.factor1()));
+        } else {
+            System.out.println(ctx.getText());
+            nodes.put(ctx, new TreeTuple(ctx.getText()));
         }
+    }
+
+    @Override
+    public void exitFactor1(Factor1Context ctx) {
+        nodes.put(ctx, new TreeTuple(ctx.getText()));
+    }
+    
+    @Override
+    public void exitNumexpbracket(NumexpbracketContext ctx) {
+        nodes.put(ctx, nodes.get(ctx.numexpression()));
     }
 
     @Override
@@ -132,14 +140,11 @@ public class TreePrinter extends ConvCCC20201BaseListener {
         Optional<ScopeToken> optional = table.findSymbol(ctx.IDENT().getText());
         if (optional.isPresent()) {
             ScopeToken token = optional.get();
-            System.out.println(token.getLexValue());
             nodes.put(ctx, new TreeTuple(token.getLexValue(), false));
 
-            if (ctx.numexpbracket().numexpression() != null) {
-                TreeTuple left = nodes.get(ctx);
-                TreeTuple right = nodes.get(ctx.numexpbracket().numexpression());
-                nodes.put(ctx, new TreeTuple("arrayAccess", left, right));
-            }
+            TreeTuple left = nodes.get(ctx);
+            TreeTuple right = nodes.get(ctx.numexpbracket().numexpression());
+            nodes.put(ctx, new TreeTuple("arrayAccess", left, right));
         }
 
     }

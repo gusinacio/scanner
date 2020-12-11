@@ -16,6 +16,10 @@ public enum TokenType {
         return width;
     }
 
+    public String getWord() {
+        return word;
+    }
+
 	public static TokenType fromString(String word) {
         for (TokenType type : values())
             if(type.word.equals(word))

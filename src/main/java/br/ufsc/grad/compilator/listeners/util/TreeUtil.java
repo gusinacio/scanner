@@ -14,10 +14,10 @@ public class TreeUtil {
     public static List<ParseTree[]> chunker(List<ParseTree> list,  int step) {
         List<ParseTree[]> parserList = new ArrayList<>();
 
-        for (int i = 0; i < list.size(); i += step) {
+        for (int i = 1; i < list.size(); i += step) {
             ParseTree[] chunk = new ParseTree[step];
 
-            for (int j = 0; j < step; j++) {
+            for (int j = 0; j < step && i + j < list.size(); j++) {
                 chunk[j] = list.get(i + j);
             }
             parserList.add(chunk);

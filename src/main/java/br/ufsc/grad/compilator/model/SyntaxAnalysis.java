@@ -54,7 +54,9 @@ public class SyntaxAnalysis {
                 }
                 throw new SyntaxErrorException("Error parsing");
             } else {
-                System.out.println("Successful parsing!");
+                System.out.println("All expressions valid!");
+                System.out.println("All declarations valid!");
+                System.out.println("Every break is inside a for!");
             }
         }
     }
