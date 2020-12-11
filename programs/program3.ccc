@@ -6,6 +6,7 @@ def defineOperacao() {
     pilha = new int[maxSize];
     int action;
     int pop;
+    int i;
 
     for (i = 0; i < (maxSize*2); i = i + 1) {
         read action;
@@ -136,7 +137,7 @@ def main() {
  int resposta;
  int max;
  max = 10;
- reposta = divisores(max);
+ resposta = divisores(max);
  return;
  }
 }
