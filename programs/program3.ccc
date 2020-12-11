@@ -1,46 +1,5 @@
-def main() {
- print "[1] Calcular fatorial";
- print "[2] Simular operações em pilha";
- print "[3] Soma dos divisores";
-
- int option;
- read option;
-
- if (option < 0) {
-    print "Operação não suportada, encerrando programa";
-    return;
- }
- 
- if (option > 3) {
-    print "Operação não suportada, encerrando programa";
-    return;
- }
-
- if (option == 1) {
-    int fat;
-    read fat;
-    int i;
-    int res;
-    res = fat;
-
-    if (fat < 0) {
-        print "Não é possível calcular fatorial de número negativo!";
-        return;
-    }
-    if (fat <= 1) {
-        print "O fatorial é 1";
-        return;
-    }
-    for (i = fat; i > 1; i = i - 1) {
-        res = res * (i - 1);
-    }
-    print "O fatorial é: " + res;
-    print "Encerrando programa...";
-    return;
- }
-
- if (option == 2) {
-    int topo;
+def defineOperacao() {
+  int topo;
     int maxSize;
     int pilha;
     topo = -1;
@@ -79,12 +38,11 @@ def main() {
         }
     }
     return;
- }
+}
 
- else {
+def divisores(int max) {
      int num;
      read num;
-     int max;
      int list;
      int qtd;
      int soma;
@@ -118,5 +76,67 @@ def main() {
 
      print "A soma dos divisores deste número é: " + soma;
      return;
+}
+
+def fatorial(int fat) {
+    read fat;
+    int i;
+    int res;
+    res = fat;
+
+    if (fat < 0) {
+        print "Não é possível calcular fatorial de número negativo!";
+        return;
+    }
+    if (fat <= 1) {
+        print "O fatorial é 1";
+        return;
+    }
+    for (i = fat; i > 1; i = i - 1) {
+        res = res * (i - 1);
+    }
+    print "O fatorial é: " + res;
+    print "Encerrando programa...";
+    return;
+}
+
+def main() {
+ print "[1] Calcular fatorial";
+ print "[2] Simular operações em pilha";
+ print "[3] Soma dos divisores";
+
+ int option;
+ read option;
+
+ if (option < 0) {
+    print "Operação não suportada, encerrando programa";
+    return;
+ }
+ 
+ if (option > 3) {
+    print "Operação não suportada, encerrando programa";
+    return;
+ }
+
+ if (option == 1) {
+  int resposta;
+  int fat;
+  fat = 6;
+  resposta = fatorial(fat);
+  return;
+ }
+
+ if (option == 2) {
+ int resposta;
+ resposta = defineOperacao();
+ return;
+ }
+
+ else {
+ int resposta;
+ int max;
+ max = 10;
+ reposta = divisores(max);
+ return;
  }
 }
