@@ -13,6 +13,7 @@ import br.ufsc.grad.compilator.error.SyntaxError;
 import br.ufsc.grad.compilator.error.SyntaxErrorListener;
 import br.ufsc.grad.compilator.listeners.ScopeListener;
 import br.ufsc.grad.compilator.listeners.SymbolListener;
+import br.ufsc.grad.compilator.listeners.TreePrinter;
 
 @SuppressWarnings("deprecation")
 public class SyntaxAnalysis {
@@ -42,6 +43,7 @@ public class SyntaxAnalysis {
             SymbolTable table = new SymbolTable();
             parser.addParseListener(new ScopeListener(table));
             parser.addParseListener(new SymbolListener(table));
+            parser.addParseListener(new TreePrinter(table));
             parser.program();
             
             // If error, stop now and print line

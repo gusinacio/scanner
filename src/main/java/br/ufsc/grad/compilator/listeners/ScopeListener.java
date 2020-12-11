@@ -39,6 +39,9 @@ public class ScopeListener extends ConvCCC20201BaseListener {
             File outputFile = new File(Constants.SYMBOL_TABLE_OUTPUT_PATH);
             if (outputFile.exists())
                 outputFile.delete();
+            outputFile = new File(Constants.TREE_OUTPUT_PATH);
+            if (outputFile.exists())
+                outputFile.delete();
         } catch (Exception e) {
             e.printStackTrace();
         }

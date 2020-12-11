@@ -1,9 +1,13 @@
 package br.ufsc.grad.compilator.listeners;
 
+import java.util.Optional;
+
 import br.ufsc.grad.compilator.antlr.ConvCCC20201BaseListener;
+import br.ufsc.grad.compilator.antlr.ConvCCC20201Parser.LvalueContext;
 import br.ufsc.grad.compilator.antlr.ConvCCC20201Parser.ParamlistContext;
 import br.ufsc.grad.compilator.antlr.ConvCCC20201Parser.VardeclContext;
 import br.ufsc.grad.compilator.model.SymbolTable;
+import br.ufsc.grad.compilator.model.scope.ScopeToken;
 import br.ufsc.grad.compilator.model.scope.TokenType;
 
 public class SymbolListener extends ConvCCC20201BaseListener {
@@ -34,5 +38,14 @@ public class SymbolListener extends ConvCCC20201BaseListener {
         } else {
             table.addSymbol(varName, TokenType.fromString(varType));
         }
+    }
+
+    @Override
+    public void exitLvalue(LvalueContext ctx) {
+        Optional<ScopeToken> optional = table.findSymbol(ctx.IDENT().getText());
+        if(optional.isEmpty()) {
+            throw new RuntimeException("Error: variable '" + ctx.IDENT().getText() + "' not declared in line " + ctx.start.getLine());
+        }
+
     }
 }
