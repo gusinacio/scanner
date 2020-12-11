@@ -1,14 +1,13 @@
-{
-{
+def ehPar(int tamanho) {
  int numbers;
  int i;
- numbers = new int [100];
+ numbers = new int [tamanho];
 
- for (i = 0; i < 100; i = i + 1){
+ for (i = 0; i < tamanho; i = i + 1){
     numbers[i] = i+1;
  }
  print "Todos os números foram inseridos no vetor!";
- for (i = 0; i < 100; i = i + 1){
+ for (i = 0; i < tamanho; i = i + 1){
     if (numbers[i] % 2 == 0) {
         print "Este número é par: ";
         print numbers[i];
@@ -22,7 +21,7 @@
  }
 }
 
-{
+def raizes(){
  int a;
  int b;
  int c;
@@ -50,7 +49,7 @@
 return;
 }
 
-{
+def palindromo(){
  int i;
  int j;
  string first;
@@ -80,24 +79,39 @@ return;
  return;
 }
 
-{
+def operacoes(int quantidade){
  int lista;
- lista = new int [125];
+ lista = new int [quantidade];
  int k;
  int l;
- l = 125;
+ l = quantidade;
  
- for (k = 0; k < 125; k = k + 1) {
+ for (k = 0; k < quantidade; k = k + 1) {
     if (k % 2 == 1) {
         lista[k] = 1;
+    } else {
+        break;
     }
  }
 
- for (k = 0; k < 125; k = k + 1) {
+ for (k = 0; k < quantidade; k = k + 1) {
     if (lista[k] != 1) {
         lista[k] = l;
         l = l - 2;
     }
  }
 }
+
+def main() {
+int resposta;
+int qtd;
+int par;
+qtd = 10;
+par = 5;
+
+resposta = operacoes(qtd);
+resposta = ehPar(par);
+resposta = palindromo();
+
+return;
 }
