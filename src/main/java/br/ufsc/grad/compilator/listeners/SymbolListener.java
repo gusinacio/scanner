@@ -53,7 +53,7 @@ public class SymbolListener extends ConvCCC20201BaseListener {
     public void exitAtribstat(AtribstatContext ctx) {
         String varName = ctx.lvalue().IDENT().getText();
         Optional<ScopeToken> optional = table.findSymbol(varName);
-        if (optional.isEmpty()) {
+        if (!optional.isPresent()) {
             throw new RuntimeException("Error: " + varName + " not declared.");
         } else {
             ScopeToken token = optional.get();
@@ -66,7 +66,7 @@ public class SymbolListener extends ConvCCC20201BaseListener {
     @Override
     public void exitLvalue(LvalueContext ctx) {
         Optional<ScopeToken> optional = table.findSymbol(ctx.IDENT().getText());
-        if(optional.isEmpty()) {
+        if(!optional.isPresent()) {
             throw new RuntimeException("Error: variable '" + ctx.IDENT().getText() + "' not declared in line " + ctx.start.getLine());
         }
 

@@ -115,12 +115,10 @@ public class TreePrinter extends ConvCCC20201BaseListener {
     @Override
     public void exitFactor(FactorContext ctx) {
         if (ctx.numexpression() != null) {
-            System.out.println(ctx.getText());
             nodes.put(ctx, nodes.get(ctx.numexpression()));
         } else if (ctx.factor1() != null) {
             nodes.put(ctx, nodes.get(ctx.factor1()));
         } else {
-            System.out.println(ctx.getText());
             nodes.put(ctx, new TreeTuple(ctx.getText()));
         }
     }
